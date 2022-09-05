@@ -8,13 +8,37 @@
 import SwiftUI
 
 struct Posts: View {
+    @EnvironmentObject var login : PostViewModel
+    @StateObject var json = ModelOneViewModel()
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        
+        NavigationView{
+            if json.datosModel.isEmpty {
+                ProgressView()
+            }else{
+                VStack(alignment: .leading){
+                List{
+                    ForEach(json.datosModel, id:\.id){ cell in
+                        NavigationLink(destination: PostsDetail()){
+                            
+                                Text("\(cell.title)")
+                            
+                        }
+                    }.onDelete { IndexSet in
+                        json.datosModel.remove(atOffsets: IndexSet)
+                    
+                        
+                    }
+                    
+                        
+                    }.navigationBarTitle("POSTS")
+                        
+                }
+                    
+            }
+                
+        }
+        
     }
-}
-
-struct Posts_Previews: PreviewProvider {
-    static var previews: some View {
-        Posts()
-    }
+    
 }

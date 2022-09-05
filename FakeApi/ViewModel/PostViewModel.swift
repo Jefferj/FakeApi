@@ -12,7 +12,11 @@ class PostViewModel: ObservableObject {
     @Published var authenticated = 0
     
     init() {
-        login(email: "eve.holt@reqres.in", password: "cityslicka")
+        if let session = UserDefaults.standard.object(forKey: "session") as? Int {
+            authenticated = session
+        }else{
+            authenticated = 2
+        }
     }
 
 
@@ -36,6 +40,7 @@ func login(email: String, password: String){
             if !datos.token.isEmpty{
                 DispatchQueue.main.async {
                     self.authenticated = 1
+                    UserDefaults.standard.setValue(1, forKey: "session")
                 }
             }
         }catch let error as NSError{

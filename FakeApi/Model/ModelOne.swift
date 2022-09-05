@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+struct ModelOne: Decodable {
+    var id : Int
+    var title : String
+    
+}
